@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Lista</title>
+</head>
+<body>
+    <h1>Lista de Compra</h1>
+    <ul>
+        {% for item in productos_en_lista %}
+        <li>
+            {{ item.producto.nombre }} - Cantidad: {{ item.cantidad }}
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+                <button type="submit" name="quitar">Quitar de la lista</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="comprar">Comprar</button>
+        <button type="submit" name="cancelar">Cancelar</button>
+    </form>
+
+    <a href="{% url 'productos' %}">Volver a Productos</a>
+    <a href="{% url 'perfil' %}">Ver Perfil</a>
+    <a href="{% url 'logout' %}">Cerrar Sesión</a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfil</title>
+</head>
+<body>
+    <h1>Perfil de Usuario</h1>
+    <h2>Bienvenido, {{ request.user.username }}!</h2>  <!-- Mensaje de bienvenida -->
+    
+    <h2>Historial de Compras</h2>
+    <ul>
+        {% for compra in historial %}
+        {% if compra.productoenhistorial_set.all %} <!-- Solo muestra si hay productos -->
+        <li>
+            Fecha: {{ compra.fecha }}
+            {% if compra.cancelada %} - Cancelada{% endif %}
+            <ul>
+                {% for item in compra.productoenhistorial_set.all %}
+                <li>{{ item.producto.nombre }} - Cantidad: {{ item.cantidad }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'productos' %}">Volver a Productos</a>
+    <a href="{% url 'logout' %}">Cerrar Sesión</a> <!-- Esto se verá como un enlace -->
+</body>
+</html>

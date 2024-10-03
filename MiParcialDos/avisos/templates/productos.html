@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <ul>
+            {% for producto in productos %}
+            <li>
+                <strong>{{ producto.nombre }}</strong> - {{ producto.descripcion }} - ${{ producto.precio }}
+                <input type="number" name="cantidad_{{ producto.id }}" min="1" value="1">
+                {% if producto.id in productos_ids_en_lista %}
+                    <button type="button" disabled>Añadido</button>
+                {% else %}
+                    <button type="submit" name="producto_id" value="{{ producto.id }}">Añadir</button>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </form>
+
+    <!-- Botones para ver perfil y cerrar sesión -->
+    <a href="{% url 'perfil' %}">Ver Perfil</a>
+    <a href="{% url 'logout' %}">Cerrar Sesión</a>
+    <a href="{% url 'ver_lista' %}">Ver Lista</a>
+</body>
+</html>

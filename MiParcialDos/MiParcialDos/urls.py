@@ -17,11 +17,10 @@ Including another URLconf
 
 # MiParcialDos/urls.py
 from django.contrib import admin
-from django.urls import path
-from avisos import views
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),  # Página inicial con el botón
-    path('enviar/', views.enviar_aviso, name='enviar-aviso'),  # Asegúrate de que el nombre sea 'enviar-aviso'
+    path('', include('avisos.urls')),  # Incluye las URLs de la aplicación 'avisos'
 ]
+
